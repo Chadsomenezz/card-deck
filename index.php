@@ -2,7 +2,7 @@
 session_start();
 
 $player1 = new Player("Richard");
-if(isset($_GET["cards1"])){
+if(isset($_GET["cards1"]) && isset($_SESSION["score"])){
     $player1->checkCollected([$_GET["cards1"],$_GET["cards2"],$_GET["cards3"],$_GET["cards4"]]);
     $_SESSION["score"] += $player1->getTotalScore();
     $player1->shuffle();
@@ -38,7 +38,7 @@ if(isset($_SESSION["score"]) && $_SESSION["score"] > 4){
 <TITLE>Playing Cards</TITLE>
 </HEAD>
 
-<h2>Score: <?= (isset($_SESSION["score"])) ? $_SESSION["score"] : "0"; ?> </h2>
+<h2>Score: <?= ( isset($_SESSION["score"]) ) ? $_SESSION["score"] : "0"; ?> </h2>
 <div>
     <a href="index.php?shuffle=yes" id="shuffle">Shuffle</a>
 </div>
