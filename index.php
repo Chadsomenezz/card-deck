@@ -1,8 +1,12 @@
 <?php include "functions.inc.php";
-session_start();
 
 $player1 = new Player("Richard");
-if(isset($_GET["cards1"]) && isset($_SESSION["score"])){
+
+if(isset($_GET["cards1"])){
+    session_start();
+    if(!isset($_SESSION["score"])){
+        $_SESSION["score"] = 0;
+    }
     $player1->checkCollected([$_GET["cards1"],$_GET["cards2"],$_GET["cards3"],$_GET["cards4"]]);
     $_SESSION["score"] += $player1->getTotalScore();
     $player1->shuffle();
@@ -14,9 +18,13 @@ if(isset($_GET["shuffle"]) && $_GET["shuffle"] === "yes"){
 
 
 if(isset($_SESSION["score"]) && $_SESSION["score"] > 4){
-    echo "YOU WON";
-    session_unset();
     session_destroy();
+
+    echo "<h2>You Win!</h2>";
+
+    session_start();
+    $_SESSION["score"] = 0;
+
 
 }
 
